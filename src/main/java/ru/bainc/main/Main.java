@@ -8,21 +8,29 @@ package ru.bainc.main;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
+        Map<String, Integer> mapResult;
+        mapResult = AnalisatorService.analizator((Paths.get(args[0])));
+        System.out.println("\nвремя  выполнения программы = "
+                + (System.currentTimeMillis() - startTime) / 1000 + " seconds ");
         System.out.println("Введите слово");
         Scanner scanner = new Scanner(System.in);
-        while (true) {
-            String word = scanner.nextLine();
-            AnalisatorService.numberOfWords(AnalisatorService.uniqueWords(AnalisatorService.readFromFile
-                    (Paths.get (args[0]))), word);
-            if (word.equals("/end"))
-                break;
+        String word;
+        do {
+            word = scanner.nextLine();
+            mapResult.containsKey(word);
+            System.out.println("Это слово встречается " + mapResult.get(word));
         }
-        System.out.println("\nвремя  выполнения программы = "
-                + (System.currentTimeMillis() - startTime)/1000 + " seconds ");
+        while (!word.equals("/end"));
+        System.out.println("Завершение работы программы");
     }
 }
+
+
+
+
